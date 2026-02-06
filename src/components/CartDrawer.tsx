@@ -69,21 +69,13 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemove, onNavi
 
   const isCheckoutReady = showShipping && items.length > 0 && vehicleInfo.trim().length > 0;
 
-  const handleStartCheckout = () => {
-    if (isCheckoutReady) {
-      // Redirect directly to the appropriate checkout URL based on shipping selection
-      const checkoutUrl = checkoutUrls[selectedShipping];
-      if (checkoutUrl) {
-        window.location.href = checkoutUrl;
-      }
-    }
-  };
+
 
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 bg-black/50" onClick={onClose}>
-      <div 
+      <div
         className="absolute right-0 top-0 h-full w-full max-w-md bg-background overflow-y-auto"
         onClick={e => e.stopPropagation()}
       >
@@ -109,24 +101,24 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemove, onNavi
                     Remover
                   </button>
                 </div>
-                
+
                 <div className="flex items-center gap-2 mt-2">
                   <div className="flex items-center border rounded">
-                    <button 
+                    <button
                       className="p-1.5"
                       onClick={() => onUpdateQuantity(item.id, Math.max(1, item.quantity - 1))}
                     >
                       <Minus className="h-3 w-3" />
                     </button>
                     <span className="w-6 text-center text-xs">{item.quantity}</span>
-                    <button 
+                    <button
                       className="p-1.5"
                       onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
                     >
                       <Plus className="h-3 w-3" />
                     </button>
                   </div>
-                  
+
                   <div className="ml-auto text-right">
                     <span className="text-econoflex-orange text-xs">-{discount}%</span>
                     <span className="text-xs text-muted-foreground line-through ml-1">R${item.originalPrice.toFixed(2).replace('.', ',')}</span>
@@ -158,15 +150,15 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemove, onNavi
                     <span>Entregas para o CEP:</span>
                   </div>
                   <div className="flex gap-2">
-                    <Input 
+                    <Input
                       placeholder="00000-000"
                       value={formattedCep}
                       onChange={handleCepChange}
                       className="flex-1 text-sm h-9"
                       maxLength={9}
                     />
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       onClick={handleCalculate}
                       disabled={cep.length !== 8}
                       className="text-sm h-9"
@@ -245,17 +237,22 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemove, onNavi
               </div>
 
               {/* Actions */}
-              <Button 
-                onClick={handleStartCheckout}
-                disabled={!isCheckoutReady}
-                className="w-full bg-econoflex-dark hover:bg-econoflex-dark/90 text-sm h-10"
+              <a
+                href="https://pay.econoflexbrasilpagamentos.shop/checkout?product=311c83f5-0181-11f1-b2a5-46da4690ad53"
+                className="w-full"
               >
-                Iniciar compra
-              </Button>
+                <Button
+                  disabled={!isCheckoutReady}
+                  className="w-full bg-econoflex-dark hover:bg-econoflex-dark/90 text-sm h-10"
+                >
+                  Iniciar compra
+                </Button>
+              </a>
+
             </>
           )}
-          
-          <button 
+
+          <button
             onClick={() => { onNavigate("produtos"); onClose(); }}
             className="w-full text-center underline text-sm"
           >
